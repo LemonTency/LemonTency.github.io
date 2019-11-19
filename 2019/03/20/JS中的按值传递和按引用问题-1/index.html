@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>JS中的按值传递和按引用问题 | Tency的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中的按值传递和按引用问题">
+<meta property="og:url" content="http://yoursite.com/2019/03/20/JS中的按值传递和按引用问题-1/index.html">
+<meta property="og:site_name" content="Tency的博客">
+<meta property="og:description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-10T14:34:32.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS中的按值传递和按引用问题">
+<meta name="twitter:description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
+  
+    <link rel="alternate" href="/atom.xml" title="Tency的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Tency的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JS中的按值传递和按引用问题-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/20/JS中的按值传递和按引用问题-1/" class="article-date">
+  <time datetime="2019-03-20T03:47:52.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS基础/">JS基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS中的按值传递和按引用问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>写出输出值，并解释为什么</p>
+<pre><code>function test(m){
+    m = {
+        v:5
+    };
+}
+var m = {
+    k:30
+};
+test(m);  
+alert(m.v); //undefined
+</code></pre><p>test函数是把m进行重写了，是重写，所以就找不到m.v了。</p>
+<p>在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；引用类型复制的是引用，之后的任何一方改变都会映射到另一方。</p>
+<p><strong>我们可以把ECMAScript函数的参数想象成局部变量。在向参数传递基本类型的值时，被传递的值被复制给一个局部变量（即命名参数，或者用ECMAScript的概念来说，就是arguments对象中的一个元素）。在向参数传递引用类型时，会把这个值在内存中的地址（指针）复制给一个局部变量，因此这个局部变量的变化会反映在函数的外部。</strong></p>
+<p>拿一个最简单的例子来讲：</p>
+<pre><code>function test(a){
+    a = a * 10
+}
+var a = 10;
+test(a);
+</code></pre><p>分析一下，函数test()括号里面的a是函数arguments对象中的一个元素，只是将外面的a复制了一份值给test里面的a,对arguments里面的a进行操作，与我们在外面定义的a，互不干扰。对上面的代码进行更改：</p>
+<pre><code>function test(num){
+    num = num * 10;
+}
+var a = 10;
+test(a);//10
+</code></pre><p>所以上面那道题都是a有点迷惑人的嫌疑，下面的代码实现的效果和上面是一样的。外面的a将自己的值复制给test中的arguments中的num就没自己什么事了。</p>
+<p>如果要把内部操作的结果给外面，也很简单，用return就好了。</p>
+<pre><code>function test(num){
+    num = num * 10;
+    return num;
+}
+var a = 10;
+var b = test(a);
+console.log(a);//10
+console.log(b);//100
+</code></pre><p><strong>但是像参数传递引用类型的数值时，会把这个值在内存中的地址（指针）复制给函数的参数，因此这个局部变量的变化会反映在函数的外部。</strong><br>看下面的例子就能很明显的看出引用传递的特点了。</p>
+<pre><code>var a = {
+    num : 1
+};
+var b = a;
+b.num = 2;
+console.log(&apos;a&apos;,a); //{num:2}
+console.log(&apos;b&apos;,b); //{num:2}
+</code></pre><p>很明显，这是按引用传递，改动b就相当于改动a.</p>
+<pre><code>var a = {
+    num : 1
+};
+var b = a;
+b = {};  
+b.num = 3;
+console.log(&apos;a&apos;,a); //{num:1}
+console.log(&apos;b&apos;,b); //{num:3}
+</code></pre><p>此时 b = {}开辟了新的内存地址。</p>
+<p>比较一下下面两段代码的不同：<br>示例一：</p>
+<pre><code>function test(n){
+    n = {
+        k : 2
+    }
+}
+
+var m = {
+    v : 100
+}
+test(m);
+console.log(m.v);//100
+console.log(m.k);//undefined
+</code></pre><p>示例二：</p>
+<pre><code>function test(n){
+    n.k = 20;
+}
+
+var m = {
+    v : 100
+}
+test(m);
+console.log(m.v);//100
+console.log(m.k);//20
+</code></pre><p>示例一：我们注意到test中对参数进行了重写，<br>    n = { k : 2 }相当于 n = {},n.k = 2;<br>    也就是说本来是test中的参数n和外面的m本来是指向同一个地址的，但是，n = { k : 2 }重写了，指向了另外一个新的地址，并在这个新的地址这里给k赋值了。</p>
+<p>示例二： n和m指向同一个地址，并且n只是添加属性并没有重写，所以两个属性都是存在的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/20/JS中的按值传递和按引用问题-1/" data-id="ck35ybx6h000cnrh2q9x3ty63" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/20/原型与原型链/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          原型与原型链
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/13/vue源码解读/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">前端工程化必备linux知识</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JS基础/">JS基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS资源/">JS资源</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯/">京城一灯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯第一章/">京城一灯第一章</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯第二章/">京城一灯第二章</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/10/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/09/HTTP协议那些事-0/">HTTP协议那些事</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/08/JS语言精粹/">JS语言精粹</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/29/Arguments对象/">Arguments对象</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/23/前端学习资源-1/">前端学习资源</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Tency<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

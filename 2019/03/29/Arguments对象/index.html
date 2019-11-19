@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Arguments对象 | Tency的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="描述arguments 是一个对应于传递给函数的参数的类数组对象。是非箭头函数中都可以用的局部变量。可以使用arguments对象在函数中引用函数的参数。如果一个函数传递了三个参数，可以用如下方式引用： argument[0] argument[1] argument[2] 当然，参数也可以被设置： argument[2] = &amp;apos;new value&amp;apos; 需要注意的是，argume">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arguments对象">
+<meta property="og:url" content="http://yoursite.com/2019/03/29/Arguments对象/index.html">
+<meta property="og:site_name" content="Tency的博客">
+<meta property="og:description" content="描述arguments 是一个对应于传递给函数的参数的类数组对象。是非箭头函数中都可以用的局部变量。可以使用arguments对象在函数中引用函数的参数。如果一个函数传递了三个参数，可以用如下方式引用： argument[0] argument[1] argument[2] 当然，参数也可以被设置： argument[2] = &amp;apos;new value&amp;apos; 需要注意的是，argume">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-10T14:34:32.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arguments对象">
+<meta name="twitter:description" content="描述arguments 是一个对应于传递给函数的参数的类数组对象。是非箭头函数中都可以用的局部变量。可以使用arguments对象在函数中引用函数的参数。如果一个函数传递了三个参数，可以用如下方式引用： argument[0] argument[1] argument[2] 当然，参数也可以被设置： argument[2] = &amp;apos;new value&amp;apos; 需要注意的是，argume">
+  
+    <link rel="alternate" href="/atom.xml" title="Tency的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Tency的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Arguments对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/29/Arguments对象/" class="article-date">
+  <time datetime="2019-03-29T07:38:57.000Z" itemprop="datePublished">2019-03-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS基础/">JS基础</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Arguments对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>arguments</code> 是一个对应于传递给函数的参数的类数组对象。<br>是<code>非箭头函数</code>中都可以用的<code>局部变量</code>。可以使用arguments对象在函数中引用函数的参数。如果一个函数传递了三个参数，可以用如下方式引用：</p>
+<pre><code>argument[0]
+argument[1]
+argument[2]
+</code></pre><p>当然，参数也可以被设置：</p>
+<pre><code>argument[2] = &apos;new value&apos;
+</code></pre><p><strong>需要注意的是，arguments并不是一个数组，只是一个类数组</strong><br>类似于数组，但是只有length和索引的性质，要将他转为数组可以用以下方法：</p>
+<pre><code>var args = Array.prototype.slice.call(arguments);
+var args = [].slice.call(arguments);
+
+// ES2015
+const args = Array.from(arguments);
+const args = [...arguments];
+</code></pre><p>看看具体应用：</p>
+<pre><code>function test(){
+    console.log(arguments)
+}
+test(1,2,3,4,5,6)//Arguments { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6}
+
+
+function test(){
+    console.log(arguments);
+    var args = [].slice.call(arguments)
+    console.log(args)
+}
+test(1,2,3,4,5,6)//{ 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6}
+    //[ 1, 2, 3, 4, 5 ]
+</code></pre><h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><h4 id="遍历参数求和"><a href="#遍历参数求和" class="headerlink" title="遍历参数求和"></a>遍历参数求和</h4><pre><code>function add(){
+    var sum = 0,
+        len = arguments.length;
+    for(var i = 0; i &lt; len; i++){
+        sum+ = arguments[i];
+    }
+    return sum;
+}
+</code></pre><h4 id="定义连接字符串的函数"><a href="#定义连接字符串的函数" class="headerlink" title="定义连接字符串的函数"></a>定义连接字符串的函数</h4><pre><code>function myConcat(separator){
+    var args = Array.prototype.slice.call(arguments,1);
+    return args.join(separator)
+}
+
+myConcat(&apos;;&apos;,2,4,5,7)//&quot;2;4;5;7&quot;
+</code></pre><h4 id="默认参数，剩余参数，解构赋值参数"><a href="#默认参数，剩余参数，解构赋值参数" class="headerlink" title="默认参数，剩余参数，解构赋值参数"></a>默认参数，剩余参数，解构赋值参数</h4><pre><code>function foo(...args){
+    return args;
+}
+foo(1,2,3)//[1,2,3]
+</code></pre><p><strong>在严格模式下，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters" target="_blank" rel="noopener">剩余参数</a>、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Default_parameters" target="_blank" rel="noopener">默认参数</a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="noopener">解构赋值</a>参数的存在不会改变 <code>arguments</code>对象的行为，但是在非严格模式下就有所不同了。</strong></p>
+<pre><code>function foo(n){
+    arguments[0] = 90;
+    console.log(n);
+}
+foo(10);//99
+</code></pre><p><strong>当非严格模式中的函数</strong>有<strong>包含<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters" target="_blank" rel="noopener">剩余参数</a>、<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Default_parameters" target="_blank" rel="noopener">默认参数</a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="noopener">解构赋值</a>，那么<code>arguments</code>对象中的值</strong>不会<strong>跟踪参数的值（反之亦然）。相反, <code>arguments</code>反映了调用时提供的参数：</strong></p>
+<pre><code>function foo(n=55){
+    arguments[0] = 99;
+    console.log(n);//55
+}
+foo()
+</code></pre><p>你看，这里的n还是55，因为函数中包括了默认参数的这个情况了。并且你看，默认参数</p>
+<pre><code>function foo(n=56){
+    console.log(arguments[0]);
+}
+foo()//undefined
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/29/Arguments对象/" data-id="ck35ybx6c0008nrh2sq4goudq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/08/JS语言精粹/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JS语言精粹
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/23/前端学习资源-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">前端学习资源</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JS基础/">JS基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS资源/">JS资源</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯/">京城一灯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯第一章/">京城一灯第一章</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/京城一灯第二章/">京城一灯第二章</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/10/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/09/HTTP协议那些事-0/">HTTP协议那些事</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/08/JS语言精粹/">JS语言精粹</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/29/Arguments对象/">Arguments对象</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/23/前端学习资源-1/">前端学习资源</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Tency<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
