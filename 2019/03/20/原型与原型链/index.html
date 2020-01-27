@@ -61,7 +61,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb6yg5szej30m205qaea.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb70xl7kvj30dk020mxa.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb71vkybrj30eq038dfz.jpg">
-<meta property="og:updated_time" content="2020-01-27T08:23:33.342Z">
+<meta property="og:updated_time" content="2020-01-27T08:57:39.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原型与原型链">
 <meta name="twitter:description" content="我们在谈论原型链时，究竟在谈些什么？ 看到上面的图就眼花缭乱？那就对了！接下来我们的目的就是弄懂上面的这张神图！跟着我一起看看吧。 继承在谈论继承之前，我们必须先明白以下知识点：  所有对象都具有__proto__属性，所有函数都具有prototype属性，Fn是一个函数（具有prototype属性），fn对象是从Fn函数new出来的，那么fn函数可以调用Fn.prototype中的所有属性。 也">
@@ -210,7 +210,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-27 16:23:33" itemprop="dateModified" datetime="2020-01-27T16:23:33+08:00">2020-01-27</time>
+                <time title="Modified: 2020-01-27 16:57:39" itemprop="dateModified" datetime="2020-01-27T16:57:39+08:00">2020-01-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -341,21 +341,16 @@ f.printf = function(){
   alert(this.name);
 }
 f.toString();   //这个要去f._proto_.proto里面找
-</code></pre></li>
+</code></pre><p>  先在脑中好好想想这个过程！</p>
+<ol>
+<li>我们要找到f.toString()，首先在f中找，但是f中我们只定义了一个printf的属性，那么我们只能去f的隐式原型里面找有没有这个属性，</li>
+<li>同时，Foo是f的构造函数，所以f.__proto_===Foo.prototype;<br>这里的f.__proto_和Foo.prototype都是对象。<br>Foo.prototype里面也没有这个属性；</li>
+<li>继续从Foo的隐式原型里面查找；<br>同时，Foo.prototype.__proto__===Object.prototype;</li>
+<li>最后注意，js中规定：Object.prototype=null;为了避免死循环。</li>
+</ol>
+</li>
 </ul>
-<pre><code>先在脑中好好想想这个过程！
-
-
-1. 我们要找到f.toString()，首先在f中找，但是f中我们只定义了一个printf的属性，那么我们只能去f的隐式原型里面找有没有这个属性，
-2. 同时，Foo是f的构造函数，所以f.\_\_proto_===Foo.prototype;
-这里的f.\_\_proto_和Foo.prototype都是对象。
-Foo.prototype里面也没有这个属性；
-3. 继续从Foo的隐式原型里面查找；
-同时，Foo.prototype.\_\_proto__===Object.prototype;
-4. 最后注意，js中规定：Object.prototype=null;为了避免死循环。
-
-
-    如果看懂了上面那张图，看懂下面这张图应该也不是什么大问题了。
+<pre><code>如果看懂了上面那张图，看懂下面这张图应该也不是什么大问题了。
 
 ![](https://tva1.sinaimg.cn/large/006tNbRwgy1gbb6n8rpgqj31gi0u0488.jpg)
 
@@ -416,7 +411,7 @@ b1.__proto__ === Book.prototype
     var m = new BMW(&apos;red&apos;);
     m.sale()
 
-ES6版本：
+**ES6版本：**
 
 
     class Car{
