@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Tency的博客" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="为什么要进行性能优化 57%的⽤户更在乎⽹⻚在3秒内是否完成加载  52%的在线⽤户认为⽹⻚打开速度影响到他们对⽹站的忠实度  每慢1秒造成⻚⾯ PV 降低11%，⽤户满意度也随之降低降低16%  近半数移动⽤户因为在10秒内仍未打开⻚⾯从⽽放弃。   性能优化学徒工雅⻁军规践⾏ html数量控制能尽量用CSS解决的就用CSS解决。（阴影，渐变）  压缩，合并，MD5，CDN接下来请大家思考一个问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能优化启示录">
+<meta property="og:url" content="http://yoursite.com/posts/5688/index.html">
+<meta property="og:site_name" content="Tency的博客">
+<meta property="og:description" content="为什么要进行性能优化 57%的⽤户更在乎⽹⻚在3秒内是否完成加载  52%的在线⽤户认为⽹⻚打开速度影响到他们对⽹站的忠实度  每慢1秒造成⻚⾯ PV 降低11%，⽤户满意度也随之降低降低16%  近半数移动⽤户因为在10秒内仍未打开⻚⾯从⽽放弃。   性能优化学徒工雅⻁军规践⾏ html数量控制能尽量用CSS解决的就用CSS解决。（阴影，渐变）  压缩，合并，MD5，CDN接下来请大家思考一个问">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-6c06843da71d4c36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-e8efcd9739ac206f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-16c0882ff66e467c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-ada37e17eb7ac4b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-9b8cf9a980a50315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-57dd4d2167d3365f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-29d8f3ca4a7502bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-59359ef8354c1cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-38abae3c3b147604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-ccc533f996af39c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-738f7a03a027261e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-9d3f312090e615b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-678d01015d49ce3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-a2858fc9f537e9e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-ac18413b9a12c429.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-9961fad98a6f88d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-cef80b97d04fada4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-fa17cdb1b727a8a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-1e0712aa04594799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-cdb151163a57a5cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-11139bc0a3285d2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7728915-dc3b5932f032f7d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2020-01-29T08:50:09.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能优化启示录">
+<meta name="twitter:description" content="为什么要进行性能优化 57%的⽤户更在乎⽹⻚在3秒内是否完成加载  52%的在线⽤户认为⽹⻚打开速度影响到他们对⽹站的忠实度  每慢1秒造成⻚⾯ PV 降低11%，⽤户满意度也随之降低降低16%  近半数移动⽤户因为在10秒内仍未打开⻚⾯从⽽放弃。   性能优化学徒工雅⻁军规践⾏ html数量控制能尽量用CSS解决的就用CSS解决。（阴影，渐变）  压缩，合并，MD5，CDN接下来请大家思考一个问">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/7728915-6c06843da71d4c36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="http://yoursite.com/posts/5688/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>性能优化启示录 | Tency的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62b62399680e8c0fa1e9bd39ad08bf38";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tency的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/5688/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tency">
+      <meta itemprop="description" content>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tency的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          性能优化启示录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-13 14:47:16" itemprop="dateCreated datePublished" datetime="2019-03-13T14:47:16+08:00">2019-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-29 16:50:09" itemprop="dateModified" datetime="2020-01-29T16:50:09+08:00">2020-01-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/京城一灯/" itemprop="url" rel="index">
+                    <span itemprop="name">京城一灯</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/5688/" class="post-meta-item leancloud_visitors" data-flag-title="性能优化启示录" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/posts/5688/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/5688/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="为什么要进行性能优化"><a href="#为什么要进行性能优化" class="headerlink" title="为什么要进行性能优化"></a>为什么要进行性能优化</h3><ul>
+<li><p>57%的⽤户更在乎⽹⻚在3秒内是否完成加载</p>
+</li>
+<li><p>52%的在线⽤户认为⽹⻚打开速度影响到他们对⽹站的忠实度</p>
+</li>
+<li><p>每慢1秒造成⻚⾯ PV 降低11%，⽤户满意度也随之降低降低16%</p>
+</li>
+<li><p>近半数移动⽤户因为在10秒内仍未打开⻚⾯从⽽放弃。</p>
+</li>
+</ul>
+<h3 id="性能优化学徒工"><a href="#性能优化学徒工" class="headerlink" title="性能优化学徒工"></a>性能优化学徒工</h3><h4 id="雅⻁军规践⾏"><a href="#雅⻁军规践⾏" class="headerlink" title="雅⻁军规践⾏"></a>雅⻁军规践⾏</h4><ul>
+<li><p>html数量控制<br>能尽量用CSS解决的就用CSS解决。（阴影，渐变）</p>
+</li>
+<li><p>压缩，合并，MD5，CDN<br>接下来请大家思考一个问题，为什么CDN对于前端这么重要？</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-6c06843da71d4c36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>还有一个很重要的点就是离线缓存<br>打开谷歌控制台的application<br><img src="https://upload-images.jianshu.io/upload_images/7728915-e8efcd9739ac206f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="application"></li>
+</ul>
+<p>localStorage存储本地数据</p>
+<pre><code>//需求是什么？
+//假设我们需要请求a.xx3322.js
+//在本地存储localstorage存储key为a.js,对应的value是a.xx3322.js
+//key为a.xx3322.js,对应的value就是我们的目标js代码
+//所以就不需要&lt;script src = &quot;a.xx3322.js&quot;&gt;
+//可以用下面代码来实现
+
+//webpack打包出来
+var res = {
+    &quot;a.js&quot;:&quot;a.xx3322.js&quot;
+}
+
+function activePage(){
+    for(let item of res){
+        const js = localStorage[item.key]
+        //如果本地没有发请求，再发一次请求缓存
+        //本地存在的话，就要判断一下当前的版本号
+        //更新我们的资源
+        if(js == item.value){
+            eval(js)
+        }else{
+            fetch(item.value).then(function(res){
+                localStorage[&apos;a.js&apos;] = &quot;a.xx3322.js&quot;;
+                localStorage[&apos;a.xx3322.js&apos;] = res;
+            })
+        }
+    }
+
+}
+activePage();
+</code></pre><p><strong>现在我们可以使用basket.js来实现上述代码的功能</strong></p>
+<p><a href="https://github.com/addyosmani/basket.js" target="_blank" rel="noopener">https://github.com/addyosmani/basket.js</a><br><a href="http://www.wenjiangs.com/article/basket-js.html" target="_blank" rel="noopener">http://www.wenjiangs.com/article/basket-js.html</a><br>使用basket.js这个库就能轻松管理了。</p>
+<p>简单来说 Basket.js 是一个脚本缓存器，使用本地储存 localStorage 缓存 JavaScript 文件，如果脚本以前在本地缓存过，那么他将会被快速的加载到页面中，如果没有缓存过，那么就使用 XHR 异步加载到页面中</p>
+<p>HTML5 规范建议存储限额为 5MB 的本地存储，但浏览器可以实现他们自己的配额，如果他们希望。如果超出了配额，浏览器可能无法在缓存中存储项目。如果发生这种情况，Bask.js 将从最旧的缓存中删除条目，然后重试。有些像 Opera 这样的浏览器会要求用户在超过设定阈值时增加配额。</p>
+<p><strong>配合使用前端离线缓存方案 localForage</strong></p>
+<h4 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h4><p><strong>缓存的优先级</strong><br>cache-control &gt; expire &gt; etag &gt;  last-modified<br><img src="https://upload-images.jianshu.io/upload_images/7728915-16c0882ff66e467c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>他们的关系面试一定会问到。<br>回去需要用nginx体现一下</p>
+<h4 id="网站协议"><a href="#网站协议" class="headerlink" title="网站协议"></a>网站协议</h4><p>HTTP2协议</p>
+<ul>
+<li><strong>HTTP2协议的特点</strong>：</li>
+<li><strong>使用二进制格式传输，更高效、更紧凑。</strong><br>TTP 2.0 中所有加强性能的核心点在于此。在之前的 HTTP 版本中，我们是通过文本的方式传输数据。在 HTTP 2.0 中引入了新的编码机制，所有传输的数据都会被分割，并采用二进制格式编码。</li>
+<li><p><strong>对报头压缩，降低开销。</strong><br>在 HTTP 1.X 中，我们使用文本的形式传输 header，在 header 携带 cookie 的情况下，可能每次都需要重复传输几百到几千的字节。</p>
+<p>在 HTTP 2.0 中，使用了 HPACK 压缩格式对传输的 header 进行编码，减少了 header 的大小。并在两端维护了索引表，用于记录出现过的 header ，后面在传输过程中就可以传输已经记录过的 header 的键名，对端收到数据后就可以通过键名找到对应的值。</p>
+</li>
+<li><p><strong>多路复用，一个网络连接实现并行请求。</strong><br>在 HTTP 2.0 中，有两个非常重要的概念，分别是帧（frame）和流（stream）。</p>
+<p>帧代表着最小的数据单位，每个帧会标识出该帧属于哪个流，流也就是多个帧组成的数据流。</p>
+<p>多路复用，就是在一个 TCP 连接中可以存在多条流。换句话说，也就是可以发送多个请求，对端可以通过帧中的标识知道属于哪个请求。通过这个技术，可以避免 HTTP 旧版本中的队头阻塞问题，极大的提高传输性能。</p>
+<p>HTTP/2对同⼀域名下所有请求都是基于流，也就是说同⼀域名不管访问多少⽂件，也只建⽴⼀路连接。同样Apache的最⼤连接数为300，因为有了这个新特性，最⼤的并发就可以提升到300，⽐原来提升了6倍！（本http1.x的话每个用户可能就会占据5-6个请求）</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>服务器主动推送，减少请求的延迟 。</strong><br>在 HTTP 2.0 中，服务端可以在客户端某个请求后，主动推送其他资源。</p>
+<p>可以想象以下情况，某些资源客户端是一定会请求的，这时就可以采取服务端 push 的技术，提前给客户端推送必要的资源，这样就可以相对减少一点延迟时间。当然在浏览器兼容的情况下你也可以使用 prefetch 。</p>
+</li>
+<li><strong>默认使用加密。</strong></li>
+</ul>
+<h4 id="小字为先"><a href="#小字为先" class="headerlink" title="小字为先"></a>小字为先</h4><p>性能优化其实就可以用这四个字来概括，“小字为先” ，也就是<strong>将大的东西变小</strong></p>
+<h3 id="渲染中性能优化"><a href="#渲染中性能优化" class="headerlink" title="渲染中性能优化"></a>渲染中性能优化</h3><h4 id="重绘"><a href="#重绘" class="headerlink" title="重绘"></a>重绘</h4><p><strong>先来了解一下开发者工具下中的隐藏技能</strong></p>
+<hr>
+<p>控制台下面有个rendering的选项(如果没有的话可以在上面的performance右边的工具栏选项选择more tools中的rendering进行添加)</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-ada37e17eb7ac4b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><code>Paint Flashing</code> 高亮显示网页中需要被重绘的部分。<br><code>Layer Borders</code> 显示Layer边界。<br><code>FPS Meter</code> 每一秒的帧细节，帧速率的分布信息和GPU的内存使用情况。<br><img src="https://upload-images.jianshu.io/upload_images/7728915-9b8cf9a980a50315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><code>Scrolling Performance Issues</code> 分析鼠标滚动时的性能问题，会显示使屏幕滚动变慢的区域。<br><code>Emulate CSS Media</code> 仿真CSS媒体类型，查看不同的设备上CSS样式效果，可能的媒体类型选项有print、screen。</p>
+<p>将paint flashing选项打勾之后点击刷新的时候可以看到页面绿了一下，正是因为这是网页中需要被重绘的部分。<br>上个代码(重点部分)</p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;ball&quot; id=&quot;ball&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var ball = document.getElementById(&apos;ball&apos;);
+    ball.classList.add(&apos;ball&apos;);
+    ball.classList.add(&apos;ball-running&apos;);
+
+&lt;/script&gt;
+
+&lt;style&gt;
+    .container{
+        position: relative;
+        min-height: 400px;
+    }
+
+    .ball{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(245, 172, 172, 0.75)
+    }
+    .ball-running{
+        animation: run-around 4s infinite;
+    }
+    @keyframes run-around {
+        0%{
+            top: 0;
+            left: 0;
+        }
+        25%{
+            top: 0;
+            left: 200px;
+        }
+        50%{
+            top: 200px;
+            left: 200px;
+        }
+        75%{
+            top: 200px;
+            left: 0;
+        }
+    }
+&lt;/style&gt;
+</code></pre><p>上面主要就是实现一个小球运动的效果，当我们已经在rendering里面选中了paint flashing的时候，我们可以看到小球运动起来的效果是外面包裹着一层绿色，说明这是要进行重绘的区域<br><img src="https://upload-images.jianshu.io/upload_images/7728915-57dd4d2167d3365f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>使用Chrome DevTools的performance面板可以记录和分析页面在运行时的所有活动。<br><a href="https://www.cnblogs.com/xiaohuochai/p/9182710.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaohuochai/p/9182710.html</a><br><img src="https://upload-images.jianshu.io/upload_images/7728915-29d8f3ca4a7502bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><code>loading</code>:加载时间<br><code>scripting</code>:脚本执行时间<br><code>rendering</code>:重排时间<br><code>painting</code>:重绘时间<br><code>idle</code>:空闲时间，网站性能越好，空闲时间越长</p>
+<p><strong>网站的渲染流程</strong></p>
+<hr>
+<p>将上面的图从summary切换到event log</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-59359ef8354c1cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>event log按照时间先后来排序<br>可以看到网站的渲染流程是这样的：</p>
+<ol>
+<li>获取DOM进行分层</li>
+<li>对每个图层节点进行样式的计算 Recalculate Style</li>
+<li>为每个对应的节点图形和位置 重排Layout</li>
+<li>对每个节点进行绘制并添加到图层位图中 Paint<br>(并不是每个图层都会GPU进行参与)<br>只有Composite Layers才会让GPU参与</li>
+<li>将这个位图上传至GPU 旋转、缩放、偏移、修改透明</li>
+</ol>
+<p>所以渲染过程总的来说是这样的：Layout -》 Paint -》 Composite Layers</p>
+<p><strong>我们说DOM会进行分层，那么什么元素会独立成层呢？</strong></p>
+<hr>
+<p>根元素、position、transfrom、半透明元素、CSS滤镜、Video 、Overflow</p>
+<p><strong>我们说GPU跑起来会比CPU快，那么哪些元素属性会让GPU参与进来呢？</strong></p>
+<hr>
+<p>CSS3D、Video、Webgl(<a href="https://github.com/lgwebdream/gpu.js)、CSS滤镜、transfrom" target="_blank" rel="noopener">https://github.com/lgwebdream/gpu.js)、CSS滤镜、transfrom</a></p>
+<p><strong>CPU和GPU到底有什么区别呢？</strong></p>
+<hr>
+<p><a href="https://www.zhihu.com/question/19903344" target="_blank" rel="noopener">https://www.zhihu.com/question/19903344</a></p>
+<p>CPU即中央处理器，GPU即图形处理器。其次，要解释两者的区别，要先明白两者的相同之处：两者都有总线和外界联系，有自己的缓存体系，以及数字和逻辑运算单元。一句话，两者都为了完成计算任务而设计。</p>
+<p>总结一下：<br>相同之处：总线和外界联系、缓存体系、数字和逻辑与预算单元、计算而生<br>不同之处：CPU主要负责和操作系统应用程序，GPU显示数据相关<br><a href="http://www.sohu.com/a/200435336_463987" target="_blank" rel="noopener">http://www.sohu.com/a/200435336_463987</a><br>还要推一推gpu.js这个库<br><a href="https://github.com/gpujs/gpu.js" target="_blank" rel="noopener">https://github.com/gpujs/gpu.js</a><br>GPU.js is a JavaScript Acceleration library for GPGPU (General purpose computing on GPUs) in JavaScript. GPU.js will automatically compile simple JavaScript functions into shader language and run them on the GPU. In case a GPU is not available, the functions will still run in regular JavaScript.<br>也就是说GPU.js会自动的将简单的js函数翻译成shader 语言并放在GPU上面运行他们。</p>
+<p><strong>像素管道</strong></p>
+<p>像素管道是网页性能优化的灵魂，让我们来看看什么是像素管道</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-38abae3c3b147604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>上图就是像素管道，通常我们会使用JS修改一些样式，随后浏览器会进行样式计算，然后进行布局，绘制，最后将各个图层合并在一起完成整个渲染的流程，这期间的每一步都有可能导致页面卡顿。</p>
+<p>注意，并不是所有的样式改动都需要经历这五个步骤。举例来说：如果在JS中修改了元素的几何属性（宽度、高度等），那么浏览器需要需要将这五个步骤都走一遍。但如果您只是修改了文字的颜色，则布局（Layout）是可以跳过去的。</p>
+<p>除了最后的合成，前面四个步骤在不同的场景下都可以被跳过。例如：CSS动画就可以跳过JS运算，它不需要执行JS。</p>
+<p>通过录制performance我们可以看到主线程的任务。<br>我们可以放大主线程从而精准的看到每一帧浏览器都执行了哪些任务以及每个任务耗费了多长时间。如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-ccc533f996af39c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>我们如何改进上面的代码呢，减少重绘呢？</strong></p>
+<p>使用transform来代替top和left</p>
+<p>我们可以看到<a href="https://csstriggers.com/transform上面对于transform的描述是" target="_blank" rel="noopener">https://csstriggers.com/transform上面对于transform的描述是</a><br>Changing transform does not trigger any geometry changes or painting, which is very good. This means that the operation can likely be carried out by the compositor thread with the help of the GPU.<br>也就是说改变transform并不会触发几何图形的更改或者重绘，transform的操作可以合成器线程在GPU的帮助下执行。</p>
+<p>css-triggers给出了不同的CSS属性被更改后会触发像素管道的那些步骤。<br>简单来说，像素管道经历的步骤越多，渲染时间就越长，单个步骤内也可能因为某个原因而变得耗时很长。</p>
+<p>将上面代码的keyframes部分更改成：</p>
+<pre><code>0%{
+    transform: translate(0)
+}
+25%{
+    transform: translate(200px,0)
+}
+50%{
+    transform: translate(200px,200px)
+}
+75%{
+    transform: translate(0,200px)
+}
+</code></pre><p>我们此时看到小球在运动，但是已经没有绿色了，已经没有重排了！！<br><img src="https://upload-images.jianshu.io/upload_images/7728915-738f7a03a027261e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>神奇！！！<br>我们再来看看录制的summary<br><img src="https://upload-images.jianshu.io/upload_images/7728915-9d3f312090e615b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>我的天呐！真神奇。换了transforms每次运动就不用重绘重排了，都是合成层和GPU在操作了，而且只要GPU开启，速度就会快很多。<br><a href="https://csstriggers.com/这个网站拿好不送！！！" target="_blank" rel="noopener">https://csstriggers.com/这个网站拿好不送！！！</a></p>
+<p><strong>总结</strong><br>CSS动画我们可以通过降低绘制区域并且使transform属性来完成动画，同时我们需要管理好图层，因为绘制和图层管理都需要成本，通常我们需要根据具体情况进行权衡并做出最好的选择。</p>
+<h4 id="重排"><a href="#重排" class="headerlink" title="重排"></a>重排</h4><p><strong>什么会引起重排？</strong></p>
+<hr>
+<ol>
+<li>添加或者删除元素的时候</li>
+<li>元素的位置发生改变</li>
+<li>元素的-webkit-box-sizing: border-box;不会让我们的盒子发生太多的变化<br>如果用标准盒子模型的话，盒子越来越大</li>
+<li>页面初始化</li>
+<li>内容变化（没有撑开盒）</li>
+<li>js 读取一下几个值 offset、scroll、width、getComputerStyle<br>为什么js读取的时候会引起重排？</li>
+</ol>
+<pre><code>var ele = document.getElementById(&apos;myDiv&apos;);
+ele.style.borderLeft = &apos;1px&apos;;
+ele.style.borderRight = &apos;2px&apos;;
+ele.style.padding = &apos;5px&apos;;
+</code></pre><p>乍一想，元素的样式改变了三次，每次改变都会引起重排和重绘，所以总共有三次重排重绘过程，但是浏览器并不会这么笨，它会把三次修改“保存”起来<strong>（大多数浏览器通过队列化修改并批量执行来优化重排过程），一次完成</strong>！但是，有些时候你可能会（经常是不知不觉）强制刷新队列并要求计划任务立即执行。获取布局信息的操作会导致队列刷新，比如：</p>
+<ul>
+<li>offsetTop, offsetLeft, offsetWidth, offsetHeight</li>
+<li>scrollTop, scrollLeft, scrollWidth, scrollHeight</li>
+<li>clientTop, clientLeft, clientWidth, clientHeight</li>
+<li><p>getComputedStyle() (currentStyle in IE)<br>将上面的代码稍加修改，</p>
+<pre><code>var ele = document.getElementById(&apos;myDiv&apos;);
+ele.style.borderLeft = &apos;1px&apos;;
+ele.style.borderRight = &apos;2px&apos;;
+
+// here use offsetHeight
+// ...
+ele.style.padding = &apos;5px&apos;;
+</code></pre><p>因为offsetHeight属性需要返回最新的布局信息，因此浏览器不得不执行渲染队列中的“待处理变化”并触发重排以返回正确的值（即使队列中改变的样式属性和想要获取的属性值并没有什么关系），所以上面的代码，前两次的操作会缓存在渲染队列中待处理，但是一旦offsetHeight属性被请求了，队列就会立即执行，所以总共有两次重排与重绘。所以尽量不要在布局信息改变时做查询。</p>
+</li>
+</ul>
+<p>我们可以使用requestAnimationFrame，拆开来写，就给了浏览器优化的机会了。</p>
+<pre><code>var ele = document.getElementById(&apos;myDiv&apos;);
+// here use offsetHeight
+// ...
+requestAnimationFrame(function(){
+    ele.style.padding = &apos;5px&apos;;
+    ele.style.borderLeft = &apos;1px&apos;;
+    ele.style.borderRight = &apos;2px&apos;;
+})
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame</a><br>requestAnimationFrame告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行</p>
+<h4 id="页面加载性能优化"><a href="#页面加载性能优化" class="headerlink" title="页面加载性能优化"></a>页面加载性能优化</h4><p><strong>必须知道的概念</strong><br>TTFB（Time To First Byte ）：⾸字节时间<br>FP（First Paint ）：⾸次绘制，仅有⼀个div根节点。<br>FCP（First Contentful Paint）： ⾸次有内容的绘制，包含⻚⾯的基本框架，但没有数据内容。<br>FMP（First Meaningful Paint）：⾸次有意义的绘制，包含⻚⾯所有元素及数据<br>TTI（Time To Interactive）：可交互时间<br>Long tasks：超过了 50ms 的任务<br>SSR&amp;&amp;CSR：服务端渲染和客户端渲染<br>Isomorphic JavaScript：同构化<br><img src="https://upload-images.jianshu.io/upload_images/7728915-678d01015d49ce3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/7728915-a2858fc9f537e9e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/7728915-ac18413b9a12c429.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FCP.png"><br><img src="https://upload-images.jianshu.io/upload_images/7728915-9961fad98a6f88d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FMP.png"><br>类比于VUE<br><img src="https://upload-images.jianshu.io/upload_images/7728915-cef80b97d04fada4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>created  类比于  FP(首次绘制，只有一个app空节点)<br>mounted  类比于 FMP（页面基本框架绘制完成）</p>
+<p><strong>Performance — 前端性能监控利器</strong><br>Performance是一个做前端性能监控离不开的API，最好在页面完全加载完成之后再使用，因为很多值必须在页面完全加载之后才能得到。最简单的办法是在window.onload事件中读取各种数据。<br><a href="https://www.cnblogs.com/bldxh/p/6857324.html" target="_blank" rel="noopener">https://www.cnblogs.com/bldxh/p/6857324.html</a><br><a href="https://cloud.tencent.com/developer/news/301840" target="_blank" rel="noopener">https://cloud.tencent.com/developer/news/301840</a><br>从输入url到用户可以使用页面的全过程时间统计，会返回一个PerformanceTiming对象，单位均为毫秒。<br><img src="https://upload-images.jianshu.io/upload_images/7728915-fa17cdb1b727a8a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>每一个performance.timing属性都表示一个页面事件（例如页面发送了请求）或者页面加载（例如当DOM开始加载），测量以毫秒的形式从1970年1月1日的午夜开始。结果为0表示该事件未发生（例如redirectEnd或者redirectStart等）<br><img src="https://upload-images.jianshu.io/upload_images/7728915-1e0712aa04594799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>其中有个方法叫<code>getEntries()</code><br>获取所有资源请求的时间数据,这个函数返回一个按startTime排序的对象数组，数组成员除了会自动根据所请求资源的变化而改变以外，还可以用mark(),measure()方法自定义添加，该对象的属性中除了包含资源加载时间还有以下五个属性。<br>name：资源名称，是资源的绝对路径或调用mark方法自定义的名称<br>startTime:开始时间<br>duration：加载时间<br>entryType：资源类型，entryType类型不同数组中的对象结构也不同！具体见下<br>initiatorType：谁发起的请求，具体见下<br>话不多说，咱们来写写代码。</p>
+<pre><code>&lt;style&gt;
+body{
+    background-color: greenyellow;
+}
+&lt;/style&gt;
+
+const obsever = new PerformanceObserver((list)=&gt;{
+    for(const entry of list.getEntries()){
+        console.log(entry.entryType);
+        console.log(entry.startTime);
+        console.log(entry.duration);
+    }
+})
+
+obsever.observe({entryTypes:[&apos;paint&apos;]});
+</code></pre><p>结果如下：<br><img src="https://upload-images.jianshu.io/upload_images/7728915-cdb151163a57a5cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>或者可以直接通过window.performance.getEntriesByType(“paint”)就可以取得FP和FCP的值</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-11139bc0a3285d2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>FMP主要用来给页面打点。</p>
+<p><strong>五分钟撸一个前端性能监控工具</strong><br><a href="http://web.jobbole.com/94938/" target="_blank" rel="noopener">http://web.jobbole.com/94938/</a></p>
+<p><strong>聊聊performance中的long task</strong><br>什么是 <code>long task</code>?<br><img src="https://upload-images.jianshu.io/upload_images/7728915-dc3b5932f032f7d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><a href="https://www.itcodemonkey.com/article/10654.html" target="_blank" rel="noopener">https://www.itcodemonkey.com/article/10654.html</a></p>
+<p>简单而言，任何在浏览器中执行超过 50 ms 的任务，都是 <code>long task</code>。</p>
+<p>那么 <code>long task</code>这个时间是怎么得来的？<br>因为浏览器是单线程，这意味着同一时间主线程只能处理一个任务，如果一个任务执行时间太长，浏览器就无法执行其他任务，用户就会感觉浏览器被卡死，因为他的输入得不到任何响应。</p>
+<p>为了100ms内能给出相应，将空闲周期执行的任务限制在50ms意味着，即使用户的输入行为发生在任务刚执行时。浏览器仍有50ms来相应用户的输入。</p>
+<p>long task 会长时间占据主线程资源，进而阻碍了其他关键任务的执行/响应，造成页面卡顿。</p>
+<p>常见场景如：</p>
+<p>不断计算 DOM 元素的大小、位置，并且根据结果对页面进行 relayout；</p>
+<p>一次性生成十分庞大的 DOM 元素，如大型表单；</p>
+<p>1000000次的循环计算；</p>
+<p><code>long task</code>的基本属性<br>Long Tasks API 定义了 <code>PerformanceLongTaskTiming</code>接口，用于描述 <code>long task</code>。<br>一般而言，name + attribution 就可以基本定位出 long task 的来源：</p>
+<p><code>name</code>：告诉我们来源是 <script> 还是 <iframe/> ？self -&gt; <script/>；same-origin-xxx + cross-origin-xxx -&gt; <iframe/></p>
+<p><code>attribution</code>：到底是哪个 <iframe/>？</p>
+<p>如何使用？</p>
+<pre><code>const obsever = new PerformanceObserver((list)=&gt;{
+    for(const entry of list.getEntries()){
+        console.log(entry.entryType);
+        console.log(entry.startTime);
+        console.log(entry.duration);
+        console.log(JSON.stringify(entry.attribution))
+    }
+})
+
+obsever.observe({entryTypes:[&apos;longtask&apos;]});
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/7728915-1f663fac7ec42e4f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>还发现了一篇不错的文章，前端性能优化标准</strong><a href="https://yq.aliyun.com/articles/598162">https://yq.aliyun.com/articles/598162</a></p>
+<p><strong>CSR SSR 预渲染 同构的优点和缺点</strong><br><img src="https://upload-images.jianshu.io/upload_images/7728915-e8d07c802a942636.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="NodeJs性能优化"><a href="#NodeJs性能优化" class="headerlink" title="NodeJs性能优化"></a>NodeJs性能优化</h4><p><strong>什么是内存泄漏？</strong><br>不再用到的变量/内存，没有及时释放，就叫做内存泄漏。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7728915-7e01d7747e7ac6f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>内存泄漏的表现</strong><br>随着内存泄漏的增长，V8对垃圾收集器越来越具有攻击性，这会使你的应用运行速度变慢。</p>
+<p>内存泄漏可能触发其他类型的失败，可能会耗尽文件描述符，还可能会突然不能建立新的数据库连接。</p>
+<p><strong>压力测试寻找内存泄漏</strong><br><a href="https://www.cnblogs.com/ycyzharry/p/8372168.html">https://www.cnblogs.com/ycyzharry/p/8372168.html</a><br><a href="https://github.com/wg/wrk">https://github.com/wg/wrk</a><br><strong>wrk</strong>支持大多数类UNIX系统，不支持windows。</p>
+<p>还有更专业的JMeter</p>
+<p><strong>查找node内存泄漏工具</strong><br>memwatch + heapdump</p>
+<p>如果不发生特别大的内存泄漏问题，这两个工具是不会跳出来的。</p>
+<pre><code>memwatch.on(&apos;leak&apos;,function(info){
+    var file = &apos;./tmp/heapsnapshot&apos;;
+    heapdump.writeSnapshot(file,function(err){
+        if(err)console.log(err);
+        else console.error(&apos;Wrote snapshot&apos;,file);
+    })
+})
+
+//通过Diff的方式找到真正的元凶
+
+var hd = new memwatch.HeapDiff();
+var diff = hd.end()
+
+//一个状态时间发射器
+memwatch.on(&apos;stats&apos;,function(stats){
+    //数据包括
+    usage_trend(使用趋势)
+    current_base(当前基数)
+    estimated_base(预期基数)
+    num_full_gc(完整的垃圾回收次数)
+    num_inc_gc(增长的垃圾回收次数)
+    heap_compactions(内存压缩次数)
+    min(最小)
+    max(最大)
+})
+</code></pre><p><a href="http://www.linkdata.se/sourcecode/memwatch/">http://www.linkdata.se/sourcecode/memwatch/</a>   memwatch的源代码下载地址</p>
+<h4 id="Nodejs编码规范"><a href="#Nodejs编码规范" class="headerlink" title="Nodejs编码规范"></a>Nodejs编码规范</h4><hr>
+<h5 id="慎用内存缓存"><a href="#慎用内存缓存" class="headerlink" title="慎用内存缓存"></a>慎用内存缓存</h5><p>函数内的变量是可以随着函数执行被回收的，但是全局不行。所以避免使用对象作为缓存，可以移步到Redis等。</p>
+<p><code>Redis</code> 是完全开源免费的，遵守BSD协议，是一个高性能的key-value数据库。</p>
+<p><code>Redis</code> 与其他 key - value 缓存产品有以下三个特点：</p>
+<p><code>Redis</code>支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。<br><code>Redis</code>不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。<br><code>Redis</code>支持数据的备份，即master-slave模式的数据备份。</p>
+<p><a href="http://www.runoob.com/redis/redis-intro.html">http://www.runoob.com/redis/redis-intro.html</a></p>
+<h5 id="关于队列消费不及时"><a href="#关于队列消费不及时" class="headerlink" title="关于队列消费不及时"></a>关于队列消费不及时</h5><p>比如我们用log4来收集日志，如果日志的产生速度大于文件写入的速度。就容易产生内存泄漏。访问已经结束了，服务器的log4日志还在不停的写。<br>解决方式：<br>监控队列的长度一旦堆积就报警或者拒绝新的要求。<br>所以的异步调用都有超时回调，一旦达到时间调用未得到结果就报警。</p>
+<h5 id="关于闭包"><a href="#关于闭包" class="headerlink" title="关于闭包"></a>关于闭包</h5><p>node如果有闭包从而产生内存泄露服务器就很容易挂，相对于在浏览器的js的闭包，node的闭包的处理显得更加重要。</p>
+<p>解决方式：</p>
+<ol>
+<li>weakmap可以立即回收某个变量。</li>
+</ol>
+<pre><code>let b = new Object()
+let wm = new Weakmap()
+wm.set(b,new Array(5*1024*1024))
+b = null
+</code></pre><ol start="2">
+<li>perf_hooks（性能钩子）<br>是nodejs中的一个api。<blockquote>
+<p>The Performance Timing API provides an implementation of the <a href="http://nodejs.cn/s/ds56gw">W3C Performance Timeline</a> specification. The purpose of the API is to support collection of high resolution performance metrics. This is the same Performance API as implemented in modern Web browsers.<br><strong>提供的功能就类似于JS中的那个new PerformanceObserver</strong></p>
+</blockquote>
+</li>
+</ol>
+<pre><code>const obs = new PerformanceObserver((items) =&gt; {
+    console.log(items.getEntries()[0].duration);
+    performance.clearMarks();
+});
+obs.observe({ entryTypes: [&apos;measure&apos;] });
+
+performance.mark(&apos;A&apos;);
+doSomeLongRunningProcess(() =&gt; {
+    performance.mark(&apos;B&apos;);
+    performance.measure(&apos;A to B&apos;, &apos;A&apos;, &apos;B&apos;);
+});
+</code></pre><p>详细内容参照<a href="http://nodejs.cn/api/perf_hooks.html">http://nodejs.cn/api/perf_hooks.html</a></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>对于nodejs应用的测试</p>
+<ol>
+<li>node –inspect app.js</li>
+<li>chrome://inspect/#devices</li>
+<li>没经过压力测试的代码只完成10%</li>
+<li>准确计算QPS未雨绸缪</li>
+<li>合理利用压力测试工具</li>
+<li>注意缓存队列及其他耗时较长的代码</li>
+<li>开发健壮的NodeJs应用</li>
+</ol>
+</script></p>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/posts/38921/" rel="next" title="ES6学习笔记">
+                  <i class="fa fa-chevron-left"></i> ES6学习笔记
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/posts/36792/" rel="prev" title="前端工程化必备linux知识">
+                  前端工程化必备linux知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要进行性能优化"><span class="nav-number">1.</span> <span class="nav-text">为什么要进行性能优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化学徒工"><span class="nav-number">2.</span> <span class="nav-text">性能优化学徒工</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#雅⻁军规践⾏"><span class="nav-number">2.1.</span> <span class="nav-text">雅⻁军规践⾏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存策略"><span class="nav-number">2.2.</span> <span class="nav-text">缓存策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网站协议"><span class="nav-number">2.3.</span> <span class="nav-text">网站协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小字为先"><span class="nav-number">2.4.</span> <span class="nav-text">小字为先</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染中性能优化"><span class="nav-number">3.</span> <span class="nav-text">渲染中性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重绘"><span class="nav-number">3.1.</span> <span class="nav-text">重绘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重排"><span class="nav-number">3.2.</span> <span class="nav-text">重排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#页面加载性能优化"><span class="nav-number">3.3.</span> <span class="nav-text">页面加载性能优化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tency</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tency</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz',
+            'X-LC-Key': 'pdpv2EtDmoHYwI6kjMOseApq',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz',
+    appKey: 'pdpv2EtDmoHYwI6kjMOseApq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>

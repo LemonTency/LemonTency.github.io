@@ -46,15 +46,19 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tency的博客">
-<meta property="og:url" content="http://yoursite.com/categories/京城一灯第一章/index.html">
+  <meta name="description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中的按值传递和按引用问题">
+<meta property="og:url" content="http://yoursite.com/posts/17635/index.html">
 <meta property="og:site_name" content="Tency的博客">
+<meta property="og:description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-29T08:50:09.636Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tency的博客">
+<meta name="twitter:title" content="JS中的按值传递和按引用问题">
+<meta name="twitter:description" content="写出输出值，并解释为什么 function test(m){     m = {         v:5     }; } var m = {     k:30 }; test(m);   alert(m.v); //undefined test函数是把m进行重写了，是重写，所以就找不到m.v了。 在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；">
 
-<link rel="canonical" href="http://yoursite.com/categories/京城一灯第一章/">
+<link rel="canonical" href="http://yoursite.com/posts/17635/">
 
 
 <script id="page-configurations">
@@ -62,13 +66,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Category: 京城一灯第一章 | Tency的博客</title>
+  <title>JS中的按值传递和按引用问题 | Tency的博客</title>
   
 
 
@@ -171,54 +175,206 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">京城一灯第一章
-          <small>Category</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/17635/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tency">
+      <meta itemprop="description" content>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tency的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS中的按值传递和按引用问题
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-20 11:47:52" itemprop="dateCreated datePublished" datetime="2019-03-20T11:47:52+08:00">2019-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-29 16:50:09" itemprop="dateModified" datetime="2020-01-29T16:50:09+08:00">2020-01-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS基础/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/17635/" class="post-meta-item leancloud_visitors" data-flag-title="JS中的按值传递和按引用问题" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/posts/17635/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/17635/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p>写出输出值，并解释为什么</p>
+<pre><code>function test(m){
+    m = {
+        v:5
+    };
+}
+var m = {
+    k:30
+};
+test(m);  
+alert(m.v); //undefined
+</code></pre><p>test函数是把m进行重写了，是重写，所以就找不到m.v了。</p>
+<p>在我看来，函数传参需要分两种情况，基本类型复制后俩个变量完全独立，之后任何一方改变都不会影响另一方；引用类型复制的是引用，之后的任何一方改变都会映射到另一方。</p>
+<p><strong>我们可以把ECMAScript函数的参数想象成局部变量。在向参数传递基本类型的值时，被传递的值被复制给一个局部变量（即命名参数，或者用ECMAScript的概念来说，就是arguments对象中的一个元素）。在向参数传递引用类型时，会把这个值在内存中的地址（指针）复制给一个局部变量，因此这个局部变量的变化会反映在函数的外部。</strong></p>
+<p>拿一个最简单的例子来讲：</p>
+<pre><code>function test(a){
+    a = a * 10
+}
+var a = 10;
+test(a);
+</code></pre><p>分析一下，函数test()括号里面的a是函数arguments对象中的一个元素，只是将外面的a复制了一份值给test里面的a,对arguments里面的a进行操作，与我们在外面定义的a，互不干扰。对上面的代码进行更改：</p>
+<pre><code>function test(num){
+    num = num * 10;
+}
+var a = 10;
+test(a);//10
+</code></pre><p>所以上面那道题都是a有点迷惑人的嫌疑，下面的代码实现的效果和上面是一样的。外面的a将自己的值复制给test中的arguments中的num就没自己什么事了。</p>
+<p>如果要把内部操作的结果给外面，也很简单，用return就好了。</p>
+<pre><code>function test(num){
+    num = num * 10;
+    return num;
+}
+var a = 10;
+var b = test(a);
+console.log(a);//10
+console.log(b);//100
+</code></pre><p><strong>但是像参数传递引用类型的数值时，会把这个值在内存中的地址（指针）复制给函数的参数，因此这个局部变量的变化会反映在函数的外部。</strong><br>看下面的例子就能很明显的看出引用传递的特点了。</p>
+<pre><code>var a = {
+    num : 1
+};
+var b = a;
+b.num = 2;
+console.log(&apos;a&apos;,a); //{num:2}
+console.log(&apos;b&apos;,b); //{num:2}
+</code></pre><p>很明显，这是按引用传递，改动b就相当于改动a.</p>
+<pre><code>var a = {
+    num : 1
+};
+var b = a;
+b = {};  
+b.num = 3;
+console.log(&apos;a&apos;,a); //{num:1}
+console.log(&apos;b&apos;,b); //{num:3}
+</code></pre><p>此时 b = {}开辟了新的内存地址。</p>
+<p>比较一下下面两段代码的不同：<br>示例一：</p>
+<pre><code>function test(n){
+    n = {
+        k : 2
+    }
+}
+
+var m = {
+    v : 100
+}
+test(m);
+console.log(m.v);//100
+console.log(m.k);//undefined
+</code></pre><p>示例二：</p>
+<pre><code>function test(n){
+    n.k = 20;
+}
+
+var m = {
+    v : 100
+}
+test(m);
+console.log(m.v);//100
+console.log(m.k);//20
+</code></pre><p>示例一：我们注意到test中对参数进行了重写，<br>    n = { k : 2 }相当于 n = {},n.k = 2;<br>    也就是说本来是test中的参数n和外面的m本来是指向同一个地址的，但是，n = { k : 2 }重写了，指向了另外一个新的地址，并在这个新的地址这里给k赋值了。</p>
+<p>示例二： n和m指向同一个地址，并且n只是添加属性并没有重写，所以两个属性都是存在的。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-06-08T17:00:21+08:00"
-              content="2019-06-08">
-          06-08
-        </time>
-      </div>
+      <footer class="post-footer">
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/posts/33890/" itemprop="url">
-            <span itemprop="name">JS语言精粹</span>
-          </a>
-      </h2>
+        
 
-    </header>
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/posts/36793/" rel="next" title="前端工程化必备linux知识">
+                  <i class="fa fa-chevron-left"></i> 前端工程化必备linux知识
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/posts/61828/" rel="prev" title="原型与原型链">
+                  原型与原型链 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="comments"></div>
 
         </div>
           

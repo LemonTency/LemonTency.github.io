@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Tency的博客" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="远程登陆linuxwindows putty Xshell  类似，不过putty是开源的，Xshell是商业性的。  cmder终端环境下使用ssh命令   linux基本知识什么是home目录？ 家目录是用户的/home目录，每个用户都有自己的文件夹其分为两种情况  (1)普通用户 /home/haha (haha是设置的用户名，也可以自己设置)  (2)root用户 /root  直接在命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端工程化必备linux知识">
+<meta property="og:url" content="http://yoursite.com/posts/36792/index.html">
+<meta property="og:site_name" content="Tency的博客">
+<meta property="og:description" content="远程登陆linuxwindows putty Xshell  类似，不过putty是开源的，Xshell是商业性的。  cmder终端环境下使用ssh命令   linux基本知识什么是home目录？ 家目录是用户的/home目录，每个用户都有自己的文件夹其分为两种情况  (1)普通用户 /home/haha (haha是设置的用户名，也可以自己设置)  (2)root用户 /root  直接在命令">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91audv5kyj312e0u0e81.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91bjga9n5j30yc056myl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb86tej0nj30zs05wwg0.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91aqoyuxwj30z204gwfv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91bkk3ahxj310y0qmtnd.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91blbjvkcj30lq0k8diq.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91apfd7gxj30io0bmwji.jpg">
+<meta property="og:updated_time" content="2020-01-29T08:50:09.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端工程化必备linux知识">
+<meta name="twitter:description" content="远程登陆linuxwindows putty Xshell  类似，不过putty是开源的，Xshell是商业性的。  cmder终端环境下使用ssh命令   linux基本知识什么是home目录？ 家目录是用户的/home目录，每个用户都有自己的文件夹其分为两种情况  (1)普通用户 /home/haha (haha是设置的用户名，也可以自己设置)  (2)root用户 /root  直接在命令">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g91audv5kyj312e0u0e81.jpg">
+
+<link rel="canonical" href="http://yoursite.com/posts/36792/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>前端工程化必备linux知识 | Tency的博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?62b62399680e8c0fa1e9bd39ad08bf38";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tency的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/36792/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Tency">
+      <meta itemprop="description" content>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tency的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端工程化必备linux知识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-13 20:34:43" itemprop="dateCreated datePublished" datetime="2019-03-13T20:34:43+08:00">2019-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-29 16:50:09" itemprop="dateModified" datetime="2020-01-29T16:50:09+08:00">2020-01-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/京城一灯/" itemprop="url" rel="index">
+                    <span itemprop="name">京城一灯</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/36792/" class="post-meta-item leancloud_visitors" data-flag-title="前端工程化必备linux知识" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/posts/36792/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/36792/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="远程登陆linux"><a href="#远程登陆linux" class="headerlink" title="远程登陆linux"></a>远程登陆linux</h4><h5 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h5><ul>
+<li><p>putty Xshell  类似，不过putty是开源的，Xshell是商业性的。</p>
+</li>
+<li><p>cmder终端环境下使用ssh命令</p>
+</li>
+</ul>
+<h4 id="linux基本知识"><a href="#linux基本知识" class="headerlink" title="linux基本知识"></a>linux基本知识</h4><h5 id="什么是home目录？"><a href="#什么是home目录？" class="headerlink" title="什么是home目录？"></a>什么是home目录？</h5><ol>
+<li><p>家目录是用户的/home目录，每个用户都有自己的文件夹<br>其分为两种情况</p>
+<p> (1)普通用户</p>
+<pre><code>/home/haha (haha是设置的用户名，也可以自己设置)
+</code></pre><p> (2)root用户</p>
+<pre><code>/root
+</code></pre><p> 直接在命令行敲cd 就会进入到当前用户的home目录下。</p>
+</li>
+<li><p>根目录是指最上层的目录，即“/”,根目录下有很多目录：</p>
+</li>
+</ol>
+<pre><code>dev  home  lib64  mnt    opt   root  sbin  sys  usr boot  etc  lib   media  newFS  proc  run   srv   tmp  var
+</code></pre><ol start="3">
+<li><p>如何进行普通用户和root用户的切换</p>
+<p> 普通用户→root用户</p>
+<pre><code>su root 输入密码
+</code></pre><p> root用户→普通用户</p>
+<pre><code>su haha(haha为用户名)
+</code></pre></li>
+</ol>
+<h5 id="重要linux命令"><a href="#重要linux命令" class="headerlink" title="重要linux命令"></a>重要linux命令</h5><ol>
+<li><p>行编辑器 vi/vim </p>
+<p> 基本上 vi/vim 共分为三种模式，分别是命令模式（Command mode），输入模式（Insert mode）和底线命令模式（Last line mode）。 这三种模式的作用分别是：</p>
+<p> <strong>命令模式：</strong><br> 用户刚刚启动 vi/vim，便进入了命令模式。</p>
+<p> 此状态下敲击键盘动作会被Vim识别为命令，而非输入字符。比如我们此时按下i，并不会输入一个字符，i被当作了一个命令。</p>
+<p> 以下是常用的几个命令：</p>
+<p> i 切换到输入模式，以输入字符。<br> x 删除当前光标所在处的字符。<br> : 切换到底线命令模式，以在最底一行输入命令。</p>
+<p> 也就是说，<strong>若想要编辑文本：启动Vim，进入了命令模式，按下i，切换到输入模式。</strong></p>
+<p> <strong>输入模式</strong><br> 在命令模式下按下i就进入了输入模式。</p>
+<p> ESC，退出输入模式，切换到命令模式</p>
+<p> <strong>底线模式</strong></p>
+<p> 在命令模式下按下:（英文冒号）就进入了底线命令模式。</p>
+<p> 底线命令模式可以输入单个或多个字符的命令，可用的命令非常多。</p>
+<p> 一般用  w (保存文件)  q(退出程序)</p>
+<p> <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91audv5kyj312e0u0e81.jpg" alt></p>
+<p> 密密麻麻的有点恐怖。</p>
+</li>
+<li><p>服务管理命令 systemctl </p>
+<p> 拿httpd.service来举例：</p>
+<p> systemctl start httpd.service 启动httpd.service服务</p>
+<p> systemctl enable nfs-server.service  设置httpd.service服务开机自启动</p>
+<p> systemctl disable nfs-server.service  设置httpd.service服务停止开机自启动</p>
+<p> systemctl status nfs-server.service   查看服务当前状态</p>
+<p> systemctl stop nfs-server.service 停止httpd.service服务</p>
+<p> systemctl 查看所有服务</p>
+</li>
+<li><p>网络管理命令 ifconfig、ip命令、router </p>
+<p> <strong>ipconfig(interface config)</strong></p>
+<p> 一般就用ipconfig来查看一些ip地址等的信息，其他的详细内容可以参考博文：<a href="https://www.cnblogs.com/mmx8861/p/9277108.html" target="_blank" rel="noopener">https://www.cnblogs.com/mmx8861/p/9277108.html</a></p>
+<p> <strong>ip</strong></p>
+<p> ip命令其实是一个网络配置工具箱。linux的ip命令和ifconfig类似，但前者功能更强大，并旨在取代后者。<br> ip addr  查看ip地址<br> 其他详细内容可以参考博文：</p>
+<p> <a href="https://linux.cn/article-3144-1.html" target="_blank" rel="noopener">https://linux.cn/article-3144-1.html</a></p>
+<p> <strong>router</strong></p>
+<p> 使用route 命令可以查看 Linux 内核路由表。</p>
+<p> <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91bjga9n5j30yc056myl.jpg" alt><br> rooute命令的输出项说明</p>
+</li>
+</ol>
+<pre><code>Destination    目标网段或者主机
+Gateway       网关地址， ”*” 表示目标是本主机所属的网络，不需要路由
+Genmask    网络掩码
+Iface    该路由表项对应的输出接口
+</code></pre><ol start="4">
+<li>命令行下载命令 curl、wget </li>
+</ol>
+<pre><code>wget -c url  加了-c  断点续传，对于我们下载大文件时突然由于网络等原因中断非常有帮助，我们可以继续接着下载而不是重新下载一个文件。需要继续中断的下载时可以使用-c参数。 
+</code></pre><ol start="5">
+<li><p>怎样查看Linux命令的帮助</p>
+<p> xxx(某某命令)  -h<br> 就会把一些相关参数和具体应用都显示出来。<br> man xxx(某某命令)</p>
+</li>
+<li><p>查看服务器系统信息</p>
+<p> lsb release -a </p>
+</li>
+<li><p>在终端下不小心ctrl+s了怎么办？</p>
+<p> ctrl+s实际上是把终端挂起了，这个时候只需要ctrl+q就行了。</p>
+<p> <strong>一些常见的快捷方式</strong></p>
+<p> ctrl+c 结束正在运行的程序【ping、telnet等】 </p>
+<p> ctrl+d 结束输入或退出shell </p>
+<p> ctrl+s 暂停屏幕输出 </p>
+<p> ctrl+q 恢复屏幕输出 </p>
+<p> ctrl+l 清屏，等同于Clear </p>
+<p> ctrl+a/ctrl+e 快速移动光标到行首/行尾</p>
+</li>
+</ol>
+<h5 id="Linux进程管理相关命令"><a href="#Linux进程管理相关命令" class="headerlink" title="Linux进程管理相关命令"></a>Linux进程管理相关命令</h5><ol>
+<li><p>top 命令详解 </p>
+<p> top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况top，相当于windows下面的资源管理器。</p>
+<p> <a href="https://www.cnblogs.com/sunshuhai/p/6250514.html" target="_blank" rel="noopener">https://www.cnblogs.com/sunshuhai/p/6250514.html</a></p>
+</li>
+<li><p>ps 命令 详解</p>
+<p> ps是显示瞬间进程的状态，并不动态连续；如果想对进程进行实时监控应该用top命令。</p>
+<p> 请强行记住<strong>ps aux</strong>这个命令行组合显示所有包含其他使用者的行程<br> <a href="http://www.runoob.com/linux/linux-comm-ps.html" target="_blank" rel="noopener">http://www.runoob.com/linux/linux-comm-ps.html</a></p>
+<p> 1号进程是所有其他进程的父进程，所以不能被杀掉。<br> 一旦杀死了父进程，系统就会崩溃。</p>
+<p> grep是筛选命令使用正则表达式搜索文本，匹配你要找的进程</p>
+<p> ps aux | grep sshd   查到sshd的进程</p>
+<p> <img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbb86tej0nj30zs05wwg0.jpg" alt></p>
+<p> 最后一行包括了grep的不需要管，因为这是因为我们的搜索才存在的进程。<br> 既然有两个进程，我们就应该区分哪一个是子进程，哪一个是父进程，杀死进程的时候只要杀父进程，子进程也会跟着完蛋。（<strong>哪个PID小哪个就最有可能是父进程</strong>）</p>
+<p> 详情可以参考博文：<br> <a href="https://www.cnblogs.com/robertoji/p/5555449.html" target="_blank" rel="noopener">https://www.cnblogs.com/robertoji/p/5555449.html</a></p>
+</li>
+<li><p>kill、pkill 命令及使用注意事项 </p>
+<p> kill PID  杀死进程<br> kill -9 PID  彻底杀死进程</p>
+<p> kill像linux操作系统发信号，9号信号就是强制关闭一个进程，不加-9就是让进程自行退出。</p>
+</li>
+<li><p>w 命令 </p>
+<p> w是who的简写，显示当前用户</p>
+</li>
+</ol>
+<h5 id="Linux网络管理相关命令"><a href="#Linux网络管理相关命令" class="headerlink" title="Linux网络管理相关命令"></a>Linux网络管理相关命令</h5><ol>
+<li><p>查看和配置网络基本信息 ifconfig、ip </p>
+</li>
+<li><p>重启网卡 </p>
+</li>
+<li><p>查看路由配置 router </p>
+</li>
+<li><p>排查网络故障 traceroute</p>
+<p> Linux traceroute命令用于显示数据包到主机间的路径。（追踪通信过程中经过的路由）</p>
+<p> traceroute指令让你追踪网络数据包的路由途径，预设数据包大小是40Bytes，用户可另行设置。</p>
+</li>
+<li><p>怎样找到占用网络端口的进程</p>
+<p> ss命令、netstat命令</p>
+<p> ss命令与netstat类似</p>
+<p> ss -an  : 端口也可以一起显示（ -a:  all， -n:  numeric         【不解析服务名称】-p:  progress【查看使用某个网络端口号的进程】）</p>
+<p> 如果要查找使用22端口的进程应该怎么做？</p>
+<p> ss -anp | grep :22<br> 就能得到我们要的进程了。<br> <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91aqoyuxwj30z204gwfv.jpg" alt="image.png"></p>
+</li>
+</ol>
+<h4 id="进程-线程-协程"><a href="#进程-线程-协程" class="headerlink" title="进程 线程 协程"></a>进程 线程 协程</h4><p>一篇比较好的讲解进程和线程的博文：<br><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html</a></p>
+<ul>
+<li><p>双击了一个exe，就产生了一个进程。<br>  进程的目的就是担当分配系统资源（CPU时间、内存）的实体<br>  进程需要进行一系列的运算。如果CPU是单核的，那么每次只能运行一个进程。（一核同一时间能运行一个进程）</p>
+</li>
+<li><p>线程是操作系统能够进行运算调度的最小单位 。</p>
+</li>
+<li><p>协程是一种用户态的轻量级线程，无法利用多核资源。正如一个进程可以拥有多个线程一样，一个线程也可以拥有多个协程。</p>
+<p>  <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91bkk3ahxj310y0qmtnd.jpg" alt>     </p>
+</li>
+<li><p>IO密集型应用的发展：多进程-&gt;多线程-&gt;事件驱动-&gt;协程。IO密集型的任务一般涉及网络，磁盘IO。大部分时间都在等待IO操作完成（因为IO的速度远远低于CPU和内存的速度）。对于IO密集型任务，任务越多，CPU效率越高，但也有一个限度。常见的大部分任务都是IO密集型任务，比如Web应用。<br>IO密集型应用的发展: 多进程-&gt;多线程-&gt;事件驱动-&gt;协程</p>
+</li>
+<li><p>CPU密集型（计算密集型）：消耗CPU资源，比如计算圆周率、对视频进行高清解码等任务。<br>CPU密集型程序适合C语言多线程，I/O密集型适合脚本语言开发的多线程。<br>CPU密集型应用的发展:多进程-&gt;多线程 </p>
+</li>
+<li><p>调度和切换的时间：进程 &gt; 线程 &gt; 协程</p>
+</li>
+<li><p>Linux探秘之用户态和内核态<br><a href="https://www.cnblogs.com/bakari/p/5520860.html" target="_blank" rel="noopener">https://www.cnblogs.com/bakari/p/5520860.html</a><br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91blbjvkcj30lq0k8diq.jpg" alt="Unix/Linux的体系架构.png"></p>
+<p>  如上图所示，从宏观上来看，Linux操作系统的体系架构分为<code>用户态</code>和<code>内核态</code>（或者用户空间和内核）。内核从本质上看是一种软件——控制计算机的硬件资源，并提供上层应用程序运行的环境。<strong>用户态即上层应用程序的活动空间</strong>，应用程序的执行必须依托于内核提供的资源，包括CPU资源、存储资源、I/O资源等。为了使上层应用能够访问到这些资源，内核必须为上层应用提供访问的接口：即系统调用。</p>
+<p>  Shell是一个特殊的应用程序，俗称命令行，本质上是一个命令解释器，它下通系统调用，上通各种应用，通常充当着一种“胶水”的角色，来连接各个小功能程序，让不同程序能够以一个清晰的接口协同工作，从而增强各个程序的功能。同时，Shell是可编程的，它可以执行符合Shell语法的文本，这样的文本称为Shell脚本，通常短短的几行Shell脚本就可以实现一个非常大的功能，原因就是这些Shell语句通常都对系统调用做了一层封装。为了方便用户和系统交互，一般，一个Shell对应一个终端，终端是一个硬件设备，呈现给用户的是一个图形化窗口。我们可以通过这个窗口输入或者输出文本。这个文本直接传递给shell进行分析解释，然后执行。</p>
+</li>
+<li><p>总结<br>操作系统的设计，可以归结为三点： </p>
+<p>  1、以多进程形式，允许多个任务同时运行； </p>
+<p>  2、以多线程形式，允许单个任务分成不同的部分运行； </p>
+<p>  3、提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源</p>
+<p>  4、进程和线程的资源共享如下图：<br><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g91apfd7gxj30io0bmwji.jpg" alt="image.png"></p>
+</li>
+</ul>
+<h4 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h4><p>linux命令大全<br><a href="http://www.runoob.com/linux/linux-command-manual.html" target="_blank" rel="noopener">http://www.runoob.com/linux/linux-command-manual.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/posts/5688/" rel="next" title="性能优化启示录">
+                  <i class="fa fa-chevron-left"></i> 性能优化启示录
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/posts/36793/" rel="prev" title="前端工程化必备linux知识">
+                  前端工程化必备linux知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#远程登陆linux"><span class="nav-number">1.</span> <span class="nav-text">远程登陆linux</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#windows"><span class="nav-number">1.1.</span> <span class="nav-text">windows</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux基本知识"><span class="nav-number">2.</span> <span class="nav-text">linux基本知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是home目录？"><span class="nav-number">2.1.</span> <span class="nav-text">什么是home目录？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重要linux命令"><span class="nav-number">2.2.</span> <span class="nav-text">重要linux命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux进程管理相关命令"><span class="nav-number">2.3.</span> <span class="nav-text">Linux进程管理相关命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux网络管理相关命令"><span class="nav-number">2.4.</span> <span class="nav-text">Linux网络管理相关命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程-线程-协程"><span class="nav-number">3.</span> <span class="nav-text">进程 线程 协程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tency</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tency</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz',
+            'X-LC-Key': 'pdpv2EtDmoHYwI6kjMOseApq',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'Qlp8YnCN10nhru8jdUlnFJcw-gzGzoHsz',
+    appKey: 'pdpv2EtDmoHYwI6kjMOseApq',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
